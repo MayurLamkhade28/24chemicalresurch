@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            color: #2b2d2d;
+            background-color: #f5f9fc;
+            margin: 0;
+            padding: 0;
+        }
+        .reports-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .report-card {
+            width: calc(50% - 30px);
+            background-color: #fff;
+            box-shadow: 0px 0px 10px #ddd;
+            margin-bottom: 20px;
+            border: 1px solid #e2e7eb;
+            padding: 15px;
+            display: flex;
+            position: relative;
+        }
+        .date-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: #2c5cc5;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .date-badge span {
+            display: block;
+            font-size: 16px;
+        }
+        .report-cover {
+            width: 80px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+        .report-details {
+            flex-grow: 1;
+        }
+        .report-details h4 {
+            font-size: 16px;
+            margin: 0 0 10px;
+        }
+        .report-details p {
+            font-size: 14px;
+            margin: 0;
+            color: #666;
+        }
+        .report-details a {
+            color: #2c5cc5;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .tab-content active{
+            background-color: #6d4db9;
+            color: #fff;
+        }
+        @media (max-width: 768px) {
+            .report-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="reports-container">
+    {% for title in titles %}
+    <div class="report-card">
+        <div class="date-badge">
+            {{ title.publish_date|date:"M" }}<br><span>{{ title.publish_date|date:"Y" }}</span>
+        </div>
+        <img class="report-cover" src="{{ title.rep_url }}" alt="{{ title.rep_title }}">
+        <div class="report-details">
+            <h4><a href="{% url 'report_detail' title.rep_id title.rep_url|slugify %}">{{ title.rep_title }}</a></h4>
+            <p>Pages: {{ title.pages }}</p>
+            <p><a href="{% url 'report_detail' title.rep_id title.rep_url|slugify %}">Read more</a></p>
+        </div>
+    </div>
+    {% empty %}
+    <p>No reports available.</p>
+    {% endfor %}
+</div>
+
+</body>
+</html>

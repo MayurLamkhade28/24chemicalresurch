@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f7f7f7;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: #003399;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 10px;
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            color: #030202;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #1d72e2d7;
+        }
+
+        .header-top .contact-info span {
+            margin-right: 20px;
+            color: #f3f3f3;
+        }
+
+        .user-menu a {
+            color: #f8f4f4;
+            margin-right: 15px;
+        }
+
+        .header-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .logo {
+            height: 60px;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 15px;
+        }
+
+        nav ul li a {
+            color: rgb(0, 0, 0);
+            font-weight: bold;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background-color: #f5eeee;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: center;
+            background-color: #246bc9cc;
+        }
+
+        .breadcrumb p {
+            color: #fffcfc;
+            text-align: left;
+        }
+
+        /* Cart Page */
+        main {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+        }
+
+        h1 {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .cart-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Cart Item Section */
+        .cart-item-section {
+            width: 65%;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 70px;
+            background-color: #f0f0f0;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+
+        .product-img {
+            width: 100px;
+            height: 100px;
+            margin-right: 20px;
+        }
+
+        .item-details {
+            flex-grow: 1;
+
+        }
+
+        .item-details h2 {
+            font-size: 18px;
+            color: #003399;
+        }
+
+        .item-details .price {
+            color: rgb(46, 158, 139);
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .license-dropdown {
+            margin-left: 30px;
+
+        }
+        .select-price {
+
+            size: 30%;
+        }
+        .remove-item {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: rgba(250, 0, 0, 0.699);
+        }
+
+        .cart-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+
+        .continue-shopping, .proceed-checkout {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .continue-shopping {
+            background-color: #39a4c5e3;
+            color: #333;
+        }
+
+        .proceed-checkout {
+            background-color: #39a4c5e3;
+            color: #333;
+        }
+
+        /* Cart Summary Section */
+        .cart-summary {
+            width: 30%;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .cart-summary h2 {
+            margin-bottom: 20px;
+        }
+
+        .summary-details p {
+            margin-bottom: 10px;
+        }
+
+        .summary-details p span {
+            float: right;
+        }
+
+        h3 {
+            margin-top: 20px;
+            font-size: 20px;
+            color: rgb(46, 158, 139);
+        }
+
+        h3 span {
+            float: right;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-top">
+            <div class="contact-info">
+                <span>📞 +91 9169162030 (Asia)</span>
+                <span>📞 +1(332) 2424 294 (Int'l)</span>
+                <span>✉️ help@24chemicalresearch.com</span>
+            </div>
+            <div class="user-menu">
+                <a href="#">Login/Register</a>
+                <a href="#">Cart ({{ cart_items|length }})</a>
+            </div>
+        </div>
+        <div class="header-bottom">
+            <img src="logo.png" alt="Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="{% url 'home' %}">HOME</a></li>
+                    <li><a href="#">ABOUT US</a></li>
+                    <li><a href="#">LATEST REPORTS</a></li>
+                    <li><a href="#">CATEGORY</a></li>
+                    <li><a href="#">CONTACT US</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Breadcrumb Section -->
+    <section class="breadcrumb">
+        <p>Home / Shopping Cart</p>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <h1>Shopping Cart</h1>
+        <div class="cart-container">
+            <!-- Left Cart Item Section -->
+            <div class="cart-item-section">
+                <div class="cart-items">
+                    {% for item in cart_items %}
+                        <div class="cart-item">
+                            <img src="report.jpg" alt="Product" class="product-img">
+                            <div class="item-details">
+                                <h2>{{ item.rep_title }}</h2>
+                                <p>License Price: <span class="price">${{ item.price }}</span></p>
+                            </div>
+                            <div class="license-dropdown">
+                                <label for="license">Select License</label>
+                                <select id="license" class="select-price">
+                                    {% for option in item.license_options %}
+                                        <option value="{{ option.label }}">{{ option.label }} - ${{ option.price }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <form method="post" action="{% url 'remove_cart_item' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="rep_id" value="{{ item.rep_id }}">
+                                <button type="submit" class="remove-item">✖</button>
+                            </form>
+                        </div>
+                    {% empty %}
+                        <p>Your cart is empty.</p>
+                    {% endfor %}
+                </div>
+                <div class="cart-buttons">
+                    <a href="{% url 'home' %}" class="continue-shopping">CONTINUE SHOPPING</a>
+                    <button class="proceed-checkout">PROCEED TO CHECKOUT</button>
+                </div>
+            </div>
+
+            <!-- Right Cart Summary Section -->
+            <div class="cart-summary">
+                <h2>CART ITEM</h2>
+                <div class="summary-details">
+                    <p>Sub Total: <span>${{ subtotal }}</span></p>
+                    <p>Other Charges: <span>$0</span></p>
+                    <p>Discount: <span>$0</span></p>
+                </div>
+                <h3>Amount Payable: <span>${{ total }}</span></h3>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
