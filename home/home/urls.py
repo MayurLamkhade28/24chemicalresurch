@@ -20,8 +20,11 @@ from web import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.HomeView.as_view(), name='home'),  # Home page
-    path('report/<int:rep_id>/<slug:url_slug>/', views.ReportDetailView.as_view(), name='report_detail'), # Report detail
-    path('add-to-cart/', views.AddCartView.as_view(), name='add_to_cart'),
-    path('cart/', views.CartView.as_view(), name='cart_view'),
+    path('', views.HomeView.as_view(), name='home'),
+    path('report/<int:rep_id>/<slug:url_slug>/', views.ReportDetailView.as_view(), name='report_detail'),
+    path('add_to_cart/<int:rep_id>/', views.AddToCartView.as_view(), name='cart'),
+    path('cart/', views.CartView.as_view(), name='cart'),
+    path('remove_from_cart/<int:rep_id>/', views.RemoveFromCartView.as_view(), name='remove_from_cart'),
+    path('buy_now/', views.BuyNowView.as_view(), name='buy_now'),
 ]
+

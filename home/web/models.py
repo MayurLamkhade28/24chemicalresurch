@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.postgres.fields import JSONField  # for PostgreSQL; adjust if using another DB
 
 
 # Create your models here.
@@ -45,7 +44,10 @@ class Report_price(models.Model):
 
 
 class Cart(models.Model):
-    cart_data = models.JSONField()  # Use native JSONField instead of the postgres-specific one
+    rep_id = models.ForeignKey(Title, on_delete=models.CASCADE)  # Link to Title model
+    rep_title = models.CharField(max_length=500)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    label = models.CharField(max_length=60)
 
     def __str__(self):
-        return str(self.cart_data)
+        return f'{self.rep_title} - {self.label} - {self.price}'

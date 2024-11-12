@@ -156,20 +156,26 @@
     </div>
 
     <!-- Buying Options Section on the Right -->
-    <div class="buying-options ">
+    <div class="buying-options">
         <h3>Choose Your Buying Option</h3>
-        <div class="buying-option">
-            {% for option in buying_options %}
-            <label>
-                <input type="radio" name="license" value="{{ option.label|slugify }}"> {{ option.label }} :&nbsp;&nbsp;&nbsp;&nbsp;USD&nbsp; {{ option.price }}
-            </label>
-            {% endfor %}
-        </div>
-        <a href="#" class="buy-now-btn">BUY NOW</a>
-        <form action="{% url 'cart_view' %}" method="POST">
+        <form method="post" action="{% url 'cart' title.rep_id %}">
             {% csrf_token %}
-            <input type="hidden" name="rep_id" value="{{ title.rep_id }}">  <!-- Make sure this is the correct variable -->
+            <div class="buying-option">
+                {% for option in buying_options %}
+                <label>
+                    <input type="radio" name="license" value="{{ option.label }}">
+                    {{ option.label }} :&nbsp;&nbsp;&nbsp;&nbsp;USD {{ option.price }}
+                </label>
+                {% endfor %}
+            </div>
+
             <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+        </form>
+
+        <!-- Buy Now Button -->
+        <form method="post" action="{% url 'buy_now' %}">
+            {% csrf_token %}
+            <button type="submit" class="buy-now-btn">BUY NOW</button>
         </form>
 
         <div class="secure-payment">
@@ -207,7 +213,6 @@
 </div>
     </div>
 </div>
-
 
 <script>
     function openTab(evt, tabName) {

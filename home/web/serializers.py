@@ -30,3 +30,4 @@ class CartSerializer(serializers.ModelSerializer):
     class meta:
         model = Cart
         fields = '__all__'
+

@@ -26,57 +26,53 @@ class ReportDetailView(View):
         return render(request, 'info.html', context)
 
 
-class AddCartView(View):
-    def post(self, request, rep_id, ):
-        print(rep_id)
-        pass
-        # report = get_object_or_404(Title, rep_id=rep_id)
-        # price_option = get_object_or_404(Report_price, price_id=price_id)
-        # print("in AddCartView")
+class AddToCartView(View):
+    def post(self, request, rep_id):
+        title = get_object_or_404(Title, rep_id=rep_id)
+        selected_option = request.POST.get('license')
 
-        # cart_item = {
-        #     "rep_id": report.rep_id,
-        #     "rep_title": report.rep_title,
-        #     "license": price_option.label,
-        #     "price": price_option.price,
-        # }
+        if not selected_option:
+            return render(request, 'error.html', {'message': 'No license option selected.'})
 
-        # print(f"Adding to cart: Report ID: {report.rep_id}, Title: {report.rep_title}, License: {price_option.label}, Price: {price_option.price}")
+        price = get_object_or_404(Report_price, label=selected_option)
 
-        # if "cart" not in request.session:
-        #     request.session["cart"] = []
+        # Check if report is already in the cart
+        cart_item, created = Cart.objects.get_or_create(
+            rep_id=title,
+            defaults={
+                'rep_title': title.rep_title,
+                'price': price.price,
+                'label': price.label,
+            }
+        )
 
-        # if cart_item not in request.session["cart"]:
-        #     request.session["cart"].append(cart_item)
-        #     request.session.modified = True
+        if not created:
+            # Update the price if the item already exists in the cart
+            cart_item.price = price.price
+            cart_item.label = price.label
+            cart_item.save()
 
-        # Cart.objects.update_or_create(id=1, defaults={"cart_data": request.session["cart"]})
+        return redirect('cart')  # Redirect to cart page after adding
 
-        return render(request, 'cart.html')
-
-
+# View to display the cart
 class CartView(View):
     def get(self, request):
-        cart_items = request.session.get("cart", [])
-        print("Session Cart Items Retrieved: ", cart_items)
+        cart_data = Cart.objects.all()  # Adjust for user-specific data if needed
+        return render(request, 'cart.html', {'cart_data': cart_data})
 
-        if not cart_items:
-            try:
-                db_cart_data = Cart.objects.get(id=1).cart_data
-                request.session["cart"] = db_cart_data
-                request.session.modified = True
-            except Cart.DoesNotExist:
-                db_cart_data = []
 
-        return render(request, 'cart.html', {"cart_items": cart_items})
+# Remove item from the cart
+class RemoveFromCartView(View):
+    def post(self, request, rep_id):
+        Cart.objects.filter(rep_id=rep_id).delete()  # Remove specific report from Cart model
+        return redirect('cart')
 
+
+# Buy Now (Redirect to checkout or confirmation page)
+class BuyNowView(View):
     def post(self, request):
-        rep_id = request.POST.get("rep_id")
-        cart_items = request.session.get("cart")
-        updated_cart = [item for item in cart_items if str(item["rep_id"]) != rep_id]
-        request.session["cart"] = updated_cart
-        request.session.modified = True
-
-        Cart.objects.update_or_create(id=1, defaults={"cart_data": updated_cart})
-        print("Updated Cart Items After Removal:", request.session["cart"])
-        return redirect('cart_view')
+        cart_data = Cart.objects.all()  # Adjust for user-specific data if needed
+        if cart_data:
+            # Handle the checkout logic, e.g., redirect to payment page
+            return redirect('checkout')  # You can create a checkout page if needed
+        return redirect('home')  # If cart is empty, redirect to the homepage
