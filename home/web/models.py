@@ -44,6 +44,7 @@ class Report_price(models.Model):
 
 
 class Cart(models.Model):
+
     rep_id = models.ForeignKey(Title, on_delete=models.CASCADE)  # Link to Title model
     rep_title = models.CharField(max_length=500)
     price = models.DecimalField(max_digits=10, decimal_places=2)

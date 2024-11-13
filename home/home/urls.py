@@ -24,6 +24,7 @@ urlpatterns = [
     path('report/<int:rep_id>/<slug:url_slug>/', views.ReportDetailView.as_view(), name='report_detail'),
     path('add_to_cart/<int:rep_id>/', views.AddToCartView.as_view(), name='cart'),
     path('cart/', views.CartView.as_view(), name='cart'),
+    path('cart/update_price/', views.UpdatePriceView.as_view(), name='update_price'),
     path('remove/', views.Remove.as_view(), name='remove'),
     path('buy_now/', views.BuyNowView.as_view(), name='buy_now'),
 ]

@@ -59,7 +59,29 @@ class AddToCartView(View):
 class CartView(View):
     def get(self, request):
         cart_data = Cart.objects.all()  # Adjust for user-specific data if needed
-        return render(request, 'cart.html', {'cart_data': cart_data})
+        report_prices = Report_price.objects.all()  # Fetch all price options
+
+        return render(request, 'cart.html', {
+            'cart_data': cart_data,
+            'report_prices': report_prices
+        })
+
+
+class UpdatePriceView(View):
+    def post(self, request):
+        cart_id = request.POST.get('cart_id')
+        price_option_id = request.POST.get('price_option')
+
+        # Fetch the cart item and the selected price option
+        cart_item = get_object_or_404(Cart, id=cart_id)
+        selected_price_option = get_object_or_404(Report_price, id=price_option_id)
+
+        # Update the cart item with the new price and label
+        cart_item.price = selected_price_option.price
+        cart_item.label = selected_price_option.label
+        cart_item.save()
+
+        return redirect('cart')
 
 
 class Remove(View):
@@ -69,6 +91,7 @@ class Remove(View):
             # Remove item from Cart model based on rep_id
             Cart.objects.filter(id=rep_id).delete()
         return redirect('cart')  # Redirect to the cart page
+
 
 # Buy Now (Redirect to checkout or confirmation page)
 class BuyNowView(View):

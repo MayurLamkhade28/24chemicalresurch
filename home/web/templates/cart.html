@@ -76,11 +76,29 @@
                                 USD {{ item.price }}
                             </div>
 
+                            <!-- Update Price Form -->
+                            <form action="{% url 'update_price' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="cart_id" value="{{ item.id }}">
+
+                                <label for="price_option_{{ item.id }}">Choose a price option:</label>
+                                <select name="price_option" id="price_option_{{ item.id }}">
+                                    {% for option in report_prices %}
+                                        <option value="{{ option.price_id }}" {% if option.label == item.label %}selected{% endif %}>
+                                            {{ option.label }} - USD {{ option.price }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+
+
+                                <button type="submit" class="update-btn btn btn-sm">Update Price</button>
+                            </form>
+
                             <!-- Remove Item Form -->
                             <form action="{% url 'remove' %}" method="post">
                                 {% csrf_token %}
                                 <input type="hidden" name="id" value="{{ item.id }}">
-                                <button type="submit" class="remove-btn btn btn-sm btn-product">Remove</button>
+                                <button type="submit" class="remove-btn btn btn-sm">Remove</button>
                             </form>
                         </li>
                     {% endfor %}
