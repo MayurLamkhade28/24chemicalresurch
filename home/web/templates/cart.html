@@ -65,36 +65,31 @@
 
 <div class="container">
     <h1>Your Cart</h1>
+        {% if cart_data %}
+            <div class="cart-items">
+                <ul>
+                    {% for item in cart_data %}
+                        <li class="cart-item">
+                            <div class="cart-item-details">
+                                <strong>{{ item.rep_title }}</strong> -
+                                {{ item.label }} -
+                                USD {{ item.price }}
+                            </div>
 
-    {% if cart_data %}
-        <div class="cart-items">
-            <ul>
-                {% for item in cart_data %}
-                    <li class="cart-item">
-                        <div class="cart-item-details">
-                            <strong>{{ item.rep_title }}</strong> -
-                            {{ item.label }} -
-                            USD {{ item.price }}
-                        </div>
+                            <!-- Remove Item Form -->
+                            <form action="{% url 'remove' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="id" value="{{ item.id }}">
+                                <button type="submit" class="remove-btn btn btn-sm btn-product">Remove</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <p>Your cart is empty.</p>
+        {% endif %}
 
-                        <!-- Remove Item Form -->
-                        <a href="{% url 'remove_from_cart' rep_id=cart.rep_id %}">Remove</a>
-
-                            {% csrf_token %}
-                            <button type="submit" class="remove-btn">Remove</button>
-
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-
-        <!-- Total and Checkout -->
-        <div class="checkout-section">
-            <a href="{% url 'buy_now' %}" class="checkout-btn">Proceed to Checkout</a>
-        </div>
-    {% else %}
-        <p>Your cart is empty.</p>
-    {% endif %}
 
     <!-- Back to Home Button -->
     <div class="back-home">

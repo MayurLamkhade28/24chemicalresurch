@@ -54,6 +54,7 @@ class AddToCartView(View):
 
         return redirect('cart')  # Redirect to cart page after adding
 
+
 # View to display the cart
 class CartView(View):
     def get(self, request):
@@ -61,12 +62,13 @@ class CartView(View):
         return render(request, 'cart.html', {'cart_data': cart_data})
 
 
-# Remove item from the cart
-class RemoveFromCartView(View):
-    def post(self, request, rep_id):
-        Cart.objects.filter(rep_id=rep_id).delete()  # Remove specific report from Cart model
-        return redirect('cart')
-
+class Remove(View):
+    def post(self, request):
+        rep_id = request.POST.get('id')  # Get ID from POST data
+        if rep_id:
+            # Remove item from Cart model based on rep_id
+            Cart.objects.filter(id=rep_id).delete()
+        return redirect('cart')  # Redirect to the cart page
 
 # Buy Now (Redirect to checkout or confirmation page)
 class BuyNowView(View):
