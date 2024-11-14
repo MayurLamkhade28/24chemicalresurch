@@ -32,11 +32,19 @@ class AddToCartView(View):
         selected_option = request.POST.get('license')
 
         if not selected_option:
-            return render(request, 'error.html', {'message': 'No license option selected.'})
+            # Return to the info page with an error message if no license is selected
+            return render(request, 'info.html', {
+                'title': title,
+                'datatable': get_object_or_404(Datatable, rep_id=rep_id),
+                'category_name': get_object_or_404(Category, rep_category_id=title.rep_category_id).category_name,
+                'buying_options': Report_price.objects.all(),
+                'error_message': "You must select a license option before adding to cart."
+            })
 
+        # Get the selected price based on the license option
         price = get_object_or_404(Report_price, label=selected_option)
 
-        # Check if report is already in the cart
+        # Check if the report is already in the cart
         cart_item, created = Cart.objects.get_or_create(
             rep_id=title,
             defaults={
@@ -47,12 +55,12 @@ class AddToCartView(View):
         )
 
         if not created:
-            # Update the price if the item already exists in the cart
+            # Update price if item already exists in the cart
             cart_item.price = price.price
             cart_item.label = price.label
             cart_item.save()
 
-        return redirect('cart')  # Redirect to cart page after adding
+        return redirect('cart')
 
 
 # View to display the cart
@@ -74,7 +82,7 @@ class UpdatePriceView(View):
 
         # Fetch the cart item and the selected price option
         cart_item = get_object_or_404(Cart, id=cart_id)
-        selected_price_option = get_object_or_404(Report_price, id=price_option_id)
+        selected_price_option = get_object_or_404(Report_price, price_id=price_option_id)
 
         # Update the cart item with the new price and label
         cart_item.price = selected_price_option.price

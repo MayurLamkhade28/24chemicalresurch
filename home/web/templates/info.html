@@ -145,92 +145,96 @@
 </head>
 <body>
 
-<div class="container">
-    <div class="report-header">
-        <img src="{{ title.rep_url }}" alt="{{ title.rep_title }}">
-        <div class="report-details">
-            <h1>{{ title.rep_title }}</h1>
-            <p class="report-info">{{ title.publish_date }} | Pages: {{ title.pages }} | Category: {{ category_name }}</p>
-            <button class="download-btn">Download Sample Report PDF</button>
-        </div>
-    </div>
-
-    <!-- Buying Options Section on the Right -->
-    <div class="buying-options">
-        <h3>Choose Your Buying Option</h3>
-        <form method="post" action="{% url 'cart' title.rep_id %}">
-            {% csrf_token %}
-            <div class="buying-option">
-                {% for option in buying_options %}
-                <label>
-                    <input type="radio" name="license" value="{{ option.label }}">
-                    {{ option.label }} :&nbsp;&nbsp;&nbsp;&nbsp;USD {{ option.price }}
-                </label>
-                {% endfor %}
+        <div class="container">
+            <div class="report-header">
+                <img src="{{ title.rep_url }}" alt="{{ title.rep_title }}">
+                <div class="report-details">
+                    <h1>{{ title.rep_title }}</h1>
+                    <p class="report-info">{{ title.publish_date }} | Pages: {{ title.pages }} | Category: {{ category_name }}</p>
+                    <button class="download-btn">Download Sample Report PDF</button>
+                </div>
             </div>
 
-            <button type="submit" class="add-to-cart-btn">Add to Cart</button>
-        </form>
+            <!-- Buying Options Section on the Right -->
+            <div class="buying-options">
+                <h3>CHOOSE YOUR BUYING OPTION</h3>
+                {% if error_message %}
+                    <p style="color: red;">{{ error_message }}</p>
+                {% endif %} 
+                <form method="post" action="{% url 'cart' title.rep_id %}">
+                    {% csrf_token %}
+                    <div class="buying-option">
+                        {% for option in buying_options %}
+                        <label>
+                            <input type="radio" name="license" value="{{ option.label }}">
+                            {{ option.label }} :&nbsp;&nbsp;&nbsp;&nbsp;USD {{ option.price }}
+                        </label>
+                        {% endfor %}
+                    </div>
 
-        <!-- Buy Now Button -->
-        <form method="post" action="{% url 'buy_now' %}">
-            {% csrf_token %}
-            <button type="submit" class="buy-now-btn">BUY NOW</button>
-        </form>
+                    <button type="submit" class="add-to-cart-btn">ADD CART</button>
+                </form>
 
-        <div class="secure-payment">
-            <p>SECURITY ASSURED</p>
-            <div class="payment-icons">
-                <img src="path/to/visa-icon.png" alt="Visa">
-                <img src="path/to/mastercard-icon.png" alt="MasterCard">
-                <img src="path/to/paypal-icon.png" alt="PayPal">
+                <!-- Buy Now Button -->
+                <form method="post" action="{% url 'buy_now' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="buy-now-btn">BUY NOW</button>
+                </form>
+
+                <div class="secure-payment">
+                    <p>SECURITY ASSURED</p>
+                    <div class="payment-icons">
+                        <img src="path/to/visa-icon.png" alt="Visa">
+                        <img src="path/to/mastercard-icon.png" alt="MasterCard">
+                        <img src="path/to/paypal-icon.png" alt="PayPal">
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="tab-menu">
-    <button class="tab-link active" onclick="openTab(event, 'overview')">Overview</button>
-    <button class="tab-link" onclick="openTab(event, 'table-of-contents')">Table of Contents</button>
-    <button class="tab-link" onclick="openTab(event, 'list-of-content')">List of Content</button>
-</div>
+        <div class="tab-menu">
+            <button class="tab-link active" onclick="openTab(event, 'overview')">Overview</button>
+            <button class="tab-link" onclick="openTab(event, 'table-of-contents')">Table of Contents</button>
+            <button class="tab-link" onclick="openTab(event, 'list-of-content')">List of Content</button>
+        </div>
 
-<div style="width:840px">
-    <div>
-<div id="overview" class="tab-content active">
-    <h3>Overview</h3>
-    <p>{{ datatable.overview }}</p>
-</div>
+        <div style="width:840px">
+            <div>
+                <div id="overview" class="tab-content active">
+                    <h3>Overview</h3>
+                    <p>{{ datatable.overview }}</p>
+                </div>
 
-<div id="table-of-contents" class="tab-content">
-    <h3>Table of Contents</h3>
-    <p>{{ datatable.table_content }}</p>
-</div>
+                <div id="table-of-contents" class="tab-content">
+                    <h3>Table of Contents</h3>
+                    <p>{{ datatable.table_content }}</p>
+                </div>
 
-<div id="list-of-content" class="tab-content">
-    <h3>List of Content</h3>
-    <p>{{ datatable.list_content }}</p>
-</div>
-    </div>
-</div>
+                <div id="list-of-content" class="tab-content">
+                    <h3>List of Content</h3>
+                    <p>{{ datatable.list_content }}</p>
+                </div>
+            </div>
+        </div>
+        
 
-<script>
-    function openTab(evt, tabName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-            tabcontent[i].classList.remove("active");
-        }
-        tablinks = document.getElementsByClassName("tab-link");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].classList.remove("active");
-        }
-        document.getElementById(tabName).style.display = "block";
-        document.getElementById(tabName).classList.add("active");
-        evt.currentTarget.classList.add("active");
-    }
-</script>
+        <script>
+            function openTab(evt, tabName) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tab-content");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                    tabcontent[i].classList.remove("active");
+                }
+                tablinks = document.getElementsByClassName("tab-link");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].classList.remove("active");
+                }
+                document.getElementById(tabName).style.display = "block";
+                document.getElementById(tabName).classList.add("active");
+                evt.currentTarget.classList.add("active");
+            }
+        </script>
 
 </body>
 </html>
