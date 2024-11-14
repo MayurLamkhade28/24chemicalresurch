@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        /* General Reset */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: Arial, sans-serif;
+            }
+
+            .top-bar {
+                background-color: #0A47A1;
+                color: #fff;
+                display: flex;
+                justify-content: space-between;
+                height: 50px;
+                padding: 6px 10px;
+                font-size: 1 ec;
+                align-items:center;
+            }
+
+            .contact-info span {
+                margin-right: 20px;
+            }
+
+            .account-actions a {
+                color: #fff;
+                text-decoration: none;
+                margin-left: 20px;
+            }
+
+            .navbar {
+                display: flex;
+                align-items: center;
+                height: 100px;
+                padding: 10px 15px;
+                background-color: #fff;
+                border-bottom: 2px solid #0A47A1;
+            }
+
+            .logo {
+                display: flex;
+                align-items: center;
+                font-size: 1.6em;
+                color: #333;
+            }
+
+            .logo img {
+                height: 40px;
+                margin-right: 10px;
+            }
+
+            .logo span {
+                font-weight: bold;
+            }
+
+            .logo span span {
+                color: #0A47A1;
+            }
+
+            .search-bar {
+                display: flex;
+                flex-grow: 1;
+                margin: 0 20px;
+            }
+
+            .search-bar input[type="text"] {
+                width: 100%;
+                padding: 9px;
+                border: 1px solid #ccc;
+                border-right: none;
+                font-size: 0.9em;
+            }
+
+            .search-bar button {
+                background-color: #0A47A1;
+                color: #fff;
+                border: none;
+                padding: 9px 16px;
+                cursor: pointer;
+                font-size: 0.9em;
+            }
+
+            .nav-links {
+                list-style-type: none;
+                display: flex;
+                gap: 30px;
+            }
+
+            .nav-links a {
+                text-decoration: none;
+                color: #333;
+                font-weight: bold;
+                font-size: 1em;
+            }
+
+            .nav-links a:hover {
+                color: #0A47A1;
+            }
+
+    </style>
+</head>
+<body>
+        <header class="top-bar">
+            <div class="contact-info">
+                <span>📞 +91 9169162030 (Asia)</span>
+                <span>📞 +1(332) 2424 294 (Int'l)</span>
+                <span>📧 help@24chemicalresearch.com</span>
+            </div>
+            <div class="account-actions">
+                <a href="#">👤 Login/Register</a>
+                <a href="{% url 'cart' %}">🛒 Cart (0)</a>
+            </div>
+        </header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="logo.png" alt="Logo">
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search your market research topic...">
+                <button>🔍</button>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Latest Reports</a></li>
+                <li><a href="{% url 'category' %}">Category</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </nav>
+</body>
+</html>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,23 +79,24 @@
     </style>
 </head>
 <body>
-<div class="reports-container">
-    {% for title in titles %}
-    <div class="report-card">
-        <div class="date-badge">
-            {{ title.publish_date|date:"M" }}<br><span>{{ title.publish_date|date:"Y" }}</span>
+{% include 'navbar.html' %}
+    <div class="reports-container">
+        {% for title in titles %}
+        <div class="report-card">
+            <div class="date-badge">
+                {{ title.publish_date|date:"M" }}<br><span>{{ title.publish_date|date:"Y" }}</span>
+            </div>
+            <img class="report-cover" src="{{ title.rep_url }}" alt="{{ title.rep_title }}">
+            <div class="report-details">
+                <h4><a href="{% url 'report_detail' title.rep_id title.rep_url|slugify %}">{{ title.rep_title }}</a></h4>
+                <p>Pages: {{ title.pages }}</p>
+                <p><a href="{% url 'report_detail' title.rep_id title.rep_url|slugify %}">Read more</a></p>
+            </div>
         </div>
-        <img class="report-cover" src="{{ title.rep_url }}" alt="{{ title.rep_title }}">
-        <div class="report-details">
-            <h4><a href="{% url 'report_detail' title.rep_id title.rep_url|slugify %}">{{ title.rep_title }}</a></h4>
-            <p>Pages: {{ title.pages }}</p>
-            <p><a href="{% url 'report_detail' title.rep_id title.rep_url|slugify %}">Read more</a></p>
-        </div>
+        {% empty %}
+        <p>No reports available.</p>
+        {% endfor %}
     </div>
-    {% empty %}
-    <p>No reports available.</p>
-    {% endfor %}
-</div>
 
 </body>
 </html>

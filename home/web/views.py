@@ -9,6 +9,12 @@ class HomeView(View):
         return render(request, 'index.html', {'titles': titles})
 
 
+class CategoryView(View):
+    def get(self, request):
+        categories = Category.objects.all()  # Change to 'categories'
+        return render(request, 'category.html', {'categories': categories})
+
+
 class ReportDetailView(View):
     def get(self, request, rep_id, url_slug):
         title = get_object_or_404(Title, rep_id=rep_id)

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Category Page</title>
+</head>
+<body>
+{% include 'navbar.html' %}
+    <div>
+        <h1>Browse Categories</h1>
+        {% for category in categories %}
+        <div class="report-card">
+            <div class="report-details">
+                <h4><a href="{% url 'category'%}">{{ category.category_name }}</a></h4>
+            </div>
+        </div>
+        {% empty %}
+        <p>No reports available.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
