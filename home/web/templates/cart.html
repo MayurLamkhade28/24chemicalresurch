@@ -58,7 +58,13 @@
             .back-home {
                 text-align: center;
             }
-
+          .form-group select {
+            width: 100%;        /* Sets the width of the select */
+            height: 40px;       /* Sets the height of the select */
+            font-size: 14px;    /* Increases font size inside select */
+            padding: 10px;      /* Adds padding for extra spacing */
+            box-sizing: border-box; /* Ensures padding doesn’t affect width */
+          }
     </style>
 </head>
 <body>
@@ -72,23 +78,27 @@
                         <li class="cart-item">
                             <div class="cart-item-details">
                                 <strong>{{ item.rep_title }}</strong>
+                                <br>
                                 <p>Licence: {{ item.label }} | Price: ${{ item.price }}</p>
                             </div>
 
                             <!-- Update Price Form -->
                             <form action="{% url 'update_price' %}" method="post">
-                                {% csrf_token %}
-                                <input type="hidden" name="cart_id" value="{{ item.id }}">
+                              {% csrf_token %}
+                              <input type="hidden" name="cart_id" value="{{ item.id }}">
 
-                                <label for="price_option_{{ item.id }}">Choose a price option:</label>
+                              <div class="form-group">
+                                  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                <label for="price_option_{{ item.id }}"><b>SELECT LICENCE :</b></label>
                                 <select name="price_option" id="price_option_{{ item.id }}" onchange="this.form.submit()">
-                                    {% for option in report_prices %}
-                                        <option value="{{ option.price_id }}" {% if option.label == item.label %}selected{% endif %}>
-                                            {{ option.label }} - USD {{ option.price }}
-                                        </option>
-                                    {% endfor %}
+                                  {% for option in report_prices %}
+                                    <option value="{{ option.price_id }}" {% if option.label == item.label %}selected{% endif %}>
+                                      ${{ option.price }} - {{ option.label }}
+                                    </option>
+                                  {% endfor %}
                                 </select>
-                            </form>
+                              </div>
+                            </form>&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <!-- Remove Item Form -->
                             <form action="{% url 'remove' %}" method="post">
