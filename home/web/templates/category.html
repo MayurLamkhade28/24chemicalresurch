@@ -11,7 +11,10 @@
         {% for category in categories %}
         <div class="report-card">
             <div class="report-details">
-                <h4><a href="{% url 'category'%}">{{ category.category_name }}</a></h4>
+
+                    <ul>
+                        <li><a href="{% url 'category'%}">{{ category.category_name }}</a></li>
+                    </ul>
             </div>
         </div>
         {% empty %}

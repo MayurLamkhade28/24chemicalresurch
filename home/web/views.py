@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
-from .models import Title, Datatable, Category, Report_price, Cart
+from .models import Title, Cart, Category, Report_price, Datatable
 
 
 class Count(View):
@@ -119,7 +119,7 @@ class Remove(View):
         return redirect('cart')  # Redirect to the cart page
 
 
-# Buy Now (Redirect to checkout or confirmation page)
+# Buy Now (Redirect to cheackout or confirmation page)
 class BuyNowView(View):
     def post(self, request):
         cart_data = Cart.objects.all()  # Adjust for user-specific data if needed
