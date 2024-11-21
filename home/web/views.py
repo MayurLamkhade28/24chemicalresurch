@@ -3,16 +3,9 @@ from django.views import View
 from .models import Title, Cart, Category, Report_price, Datatable
 
 
-class Count(View):
-    def get(self, request):
-        cart_count = Cart.objects.count()
-        return render(request, "navbar", {'cart_count': cart_count})
-
-
 class HomeView(View):
     def get(self, request):
         titles = Title.objects.all()  # Fetch all reports
-
         return render(request, 'index.html', {'titles': titles})
 
 
@@ -23,8 +16,11 @@ class CategoryView(View):
 
 
 class CategoryRelated(View):
-    def get(self, request):
-        pass
+    def get(self, request, category_id):
+        category = get_object_or_404(Category, category_id=category_id)
+        # Use rep_category_id to filter reports
+        reports = Title.objects.filter(rep_category_id=category.category_id)
+        return render(request, 'categoryview.html', {'category': category, 'reports': reports})
 
 
 class ReportDetailView(View):
