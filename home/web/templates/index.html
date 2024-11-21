@@ -97,8 +97,8 @@
             <img class="report-cover" src="{{ title.rep_url }}" alt="{{ title.rep_title }}">
             <div class="report-details">
                 <h4><a href="{% url 'report_detail' title.rep_id title.rep_url|slugify %}">{{ title.rep_title }}</a></h4>
-                <p>Pages: {{ title.pages }}</p>
-                <p><a href="{% url 'report_detail' title.rep_id title.rep_url|slugify %}">Read more</a></p>
+                <p>Pages: {{ title.pages }} | Report Code: {{title.rep_id}} | <a href="{% url 'report_detail' title.rep_id title.rep_url|slugify %}">Read Full Report</a> </p>
+                <p></p>
             </div>
         </div>
         {% empty %}
