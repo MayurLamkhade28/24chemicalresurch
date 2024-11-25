@@ -28,5 +28,6 @@ urlpatterns = [
     path('cart/', views.CartView.as_view(), name='cart'),
     path('update-price/', views.UpdatePriceView.as_view(), name='update_price'),
     path('remove/', views.Remove.as_view(), name='remove'),
+    # path('download sample/<int:rep_id>/<slug:url_slug>/', views.downloadPdf.as_view(), name='downloadPdf'),
     path('buy_now/', views.BuyNowView.as_view(), name='buy_now'),
 ]

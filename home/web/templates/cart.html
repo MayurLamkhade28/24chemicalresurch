@@ -3,139 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Cart</title>
+    <title>Shopping Cart</title>
     <style>
-            .container {
-                width: 80%;
-                margin: 0 auto;
-                padding: 20px;
-            }
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
 
-            h1 {
-                text-align: center;
-                font-size: 2em;
-            }
+        .container {
+            width: 90%;
+            margin: 30px auto;
+            display: flex;
+            gap: 20px; /* Space between cart items and summary */
+        }
 
-            .cart-items ul {
-                list-style-type: none;
-                padding: 0;
-            }
+        h1 {
+            font-size: 26px;
+            color: #0046b3;
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-            .cart-item {
-                border-bottom: 1px solid #ccc;
-                padding: 10px 0;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
+        /* Cart Items Section */
+        .cart-items-container {
+            flex: 2; /* Takes up more space compared to summary */
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
 
-            .cart-item-details {
-                flex-grow: 1;
-            }
+        .cart-items-container h2 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 22px;
+        }
 
-            .remove-btn {
-                background-color: red;
-                color: white;
-                padding: 5px 10px;
-                border: none;
-                cursor: pointer;
-            }
-
-            .checkout-btn, .back-home-btn {
-                display: inline-block;
-                padding: 10px 20px;
-                background-color: #4CAF50;
-                color: white;
-                text-decoration: none;
-                border-radius: 5px;
-                margin: 10px 0;
-            }
-
-            .checkout-btn:hover, .back-home-btn:hover {
-                background-color: #45a049;
-            }
-
-            .back-home {
-                text-align: center;
-            }
-          .form-group select {
-            width: 100%;        /* Sets the width of the select */
-            height: 40px;       /* Sets the height of the select */
-            font-size: 14px;    /* Increases font size inside select */
-            padding: 10px;      /* Adds padding for extra spacing */
-            box-sizing: border-box; /* Ensures padding doesn’t affect width */
-          }
-          .col-md-12{
-            width: 100%
-          }
-        .head-2{
-            margin-bottom: 40px;
+        .cart-items {
             margin-top: 10px;
-            position: relative;
-            color: green;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .cart-item-details {
+            flex: 2;
+            padding-left: 20px;
+        }
+
+        .cart-item-details strong {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .cart-item-details p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .form-group {
+            flex: 1;
+            text-align: right;
+        }
+
+        .form-group select {
+            padding: 5px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .remove-btn {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .remove-btn:hover {
+            background-color: #d11a2a;
+        }
+
+        /* Cart Summary Section */
+        .cart-summary-container {
+            flex: 1; /* Smaller section compared to cart items */
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .cart-summary-container h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .cart-summary-container p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .cart-summary-container .amount-payable {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0046b3;
+        }
+
+        /* Buttons */
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            text-align: center;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn.continue {
+            background-color: #0046b3;
+        }
+
+        .btn.continue:hover {
+            background-color: #003399;
+        }
+
+        .btn.checkout {
+            background-color: #00b300;
+        }
+
+        .btn.checkout:hover {
+            background-color: #009900;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .cart-items-container, .cart-summary-container {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-{% include 'navbar.html' %}
 
+    <!-- Include Navbar -->
+    {% include 'navbar.html' %}
+
+    <!-- Main Container -->
+    <h1>Shopping Cart</h1>
+    {% if cart_data %}
     <div class="container">
-        <div class="col-md-12">
-            <div class="head-2">
-                 <h1 class="title">Shopping cart</h1>
-            </div>
-        </div>
-        {% if cart_data %}
+
+        <!-- Cart Items Section -->
+        <div class="cart-items-container">
+            <h2>Cart Items</h2>
             <div class="cart-items">
-                <ul>
-                    {% for item in cart_data %}
-                        <li class="cart-item">
-                            <div class="cart-item-details">
-                                <strong>{{ item.rep_title }}</strong>
-                                <br>
-                                <p>Licence: {{ item.label }} | Price: ${{ item.price }}</p>
-                            </div>
+                {% for item in cart_data %}
+                <div class="cart-item">
+                    <!-- Product Image -->
+                    <img src="https://via.placeholder.com/80" alt="Product Image">
 
-                            <!-- Update Price Form -->
-                            <form action="{% url 'update_price' %}" method="post">
-                              {% csrf_token %}
-                              <input type="hidden" name="cart_id" value="{{ item.id }}">
+                    <!-- Product Details -->
+                    <div class="cart-item-details">
+                        <strong>{{ item.rep_title }}</strong>
+                        <p>License: {{ item.label }} | Price: ${{ item.price }}</p>
 
-                              <div class="form-group">
-                                  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                                <label for="price_option_{{ item.id }}"><b>SELECT LICENCE :</b></label>
-                                <select name="price_option" id="price_option_{{ item.id }}" onchange="this.form.submit()">
-                                  {% for option in report_prices %}
-                                    <option value="{{ option.price_id }}" {% if option.label == item.label %}selected{% endif %}>
-                                      ${{ option.price }} - {{ option.label }}
-                                    </option>
-                                  {% endfor %}
-                                </select>
-                              </div>
-                            </form>&nbsp;&nbsp;&nbsp;&nbsp;
-
-                            <!-- Remove Item Form -->
                             <form action="{% url 'remove' %}" method="post">
                                 {% csrf_token %}
                                 <input type="hidden" name="id" value="{{ item.id }}">
-                                <button type="submit" class="remove-btn btn btn-sm">Remove</button>
+                                <button type="submit" class="remove-btn">X</button>
                             </form>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% else %}
-        <br><br><center>
-        <h2 style="color:red">Shopping cart is empty!</h2>
-        <p>You have no items in your shopping cart.<br>Click here 👇 to continue shopping.</p>
-        </center><br><br>
-        {% endif %}
 
-        <!-- Back to Home Button -->
-        <div class="back-home">
-            <a href="{% url 'home' %}" class="back-home-btn">Continue Shopping</a>
+
+                    </div>
+
+                    <!-- License Dropdown -->
+                    <form action="{% url 'update_price' %}" method="post" class="form-group">
+                        {% csrf_token %}
+                        <input type="hidden" name="cart_id" value="{{ item.id }}">
+                        <select name="price_option" onchange="this.form.submit()">
+                            {% for option in report_prices %}
+                            <option value="{{ option.price_id }}" {% if option.label == item.label %}selected{% endif %}>
+                                ${{ option.price }} - {{ option.label }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </form>
+
+                    <!-- Remove Button -->
+
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Cart Summary Section -->
+        <div class="cart-summary-container">
+            <h2>CART ITEM</h2>
+            <p>Sub Total: ${{ total_price }}</p>
+            <p>Other Charges: $00</p>
+            <p>Discount: $00</p>
+            <p class="amount-payable">Amount Payable: ${{ total_price }}</p>
         </div>
     </div>
+    {% else %}
+        <center>
+         <br><br>
+                <h2 style="color:red">Shopping cart is empty!</h2>
+                <p>You have no items in your shopping cart.<br>Click here 👇 to continue shopping.</p>
+        <br><br>
+        </center>
+        {% endif %}
+         <center>
+            <a href="{% url 'home' %}" class="btn continue">Continue Shopping</a>
+            <a href="#" class="btn checkout">Checkout</a>
+         </center>
+
 
 </body>
 </html>

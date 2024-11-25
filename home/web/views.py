@@ -82,10 +82,11 @@ class CartView(View):
     def get(self, request):
         cart_data = Cart.objects.all()  # Adjust for user-specific data if needed
         report_prices = Report_price.objects.all()  # Fetch all price options
-
+        total_price = sum(item.price for item in cart_data)
         return render(request, 'cart.html', {
             'cart_data': cart_data,
-            'report_prices': report_prices
+            'report_prices': report_prices,
+            'total_price': total_price
         })
 
 
