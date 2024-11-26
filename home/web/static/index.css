@@ -1,0 +1,79 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    color: #2b2d2d;
+    background-color: #f5f9fc;
+    margin: 0;
+    padding: 0;
+}
+.reports-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+}
+.report-card {
+    width: calc(50% - 30px);
+    background-color: #fff;
+    box-shadow: 0px 0px 10px #ddd;
+    margin-bottom: 20px;
+    border: 1px solid #e2e7eb;
+    padding: 15px;
+    display: flex;
+    position: relative;
+}
+.date-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: #2c5cc5;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+.date-badge span {
+    display: block;
+    font-size: 16px;
+}
+.report-cover {
+    width: 80px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+.report-details {
+    flex-grow: 1;
+}
+.report-details h4 {
+    font-size: 16px;
+    margin: 0 0 10px;
+    color:#079abedc;
+}
+.report-details p {
+    font-size: 14px;
+    margin: 0;
+
+}
+.report-details a {
+    color: #2c5cc5;
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+}
+.tab-content active{
+    background-color: #6d4db9;
+    color: #fff;
+}
+@media (max-width: 768px) {
+    .report-card {
+        width: 100%;
+    }
+}
+.tab-menu{
+    margin-left: 27cm;
+}
+.hedare_12{
+    background-color: cadetblue;
+    max-height: 100%;
+}
