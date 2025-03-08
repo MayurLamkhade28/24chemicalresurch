@@ -77,9 +77,9 @@ WSGI_APPLICATION = 'home.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '24webtech',
+        'NAME': 'webDB',
         'USER': 'postgres',
-        'PASSWORD': 'Mayur2121',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
     }
